@@ -2,8 +2,11 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="jb.com.teamattnd">
 
-    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN"/>
-    <uses-permission android:name="android.permission.BLUETOOTH"/>
+    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
+    <uses-permission android:name="android.permission.BLUETOOTH" />
+
+    <!-- To auto-complete the email text field in the login form with the user's emails -->
+    <uses-permission android:name="android.permission.GET_ACCOUNTS" />
 
     <application
         android:allowBackup="true"
@@ -12,16 +15,23 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ui.acitvities.WelcomeActivity">
-
-        </activity>
-        <activity android:name=".ui.acitvities.HomeActivity">
+        <activity android:name=".ui.activities.SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".ui.activities.LoginActivity"
+            android:label="@string/title_activity_login" />
+        <activity
+            android:name=".ui.activities.HomeActivity"
+            android:label="@string/title_activity_home" />
+        <activity
+            android:name=".ui.activities.CreateNewActivity"
+            android:label="@string/title_activity_tasks" />
+        <!--<activity android:name=".ui.activities.WelcomeActivity"></activity>-->
     </application>
 
 </manifest>

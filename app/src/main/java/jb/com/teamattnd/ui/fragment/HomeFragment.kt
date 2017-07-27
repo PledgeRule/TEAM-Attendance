@@ -6,7 +6,6 @@ import android.support.v4.app.Fragment
 import android.support.v4.app.ListFragment
 import android.view.*
 import jb.com.teamattnd.R
-import kotlinx.android.synthetic.main.activity_home.*
 
 /**
  * Created by sandeep.singh on 7/25/2017.
