@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     tools:context="jb.com.teamattnd.ui.acitvities.HomeActivity">
 
-    <fragment
+  <!--  <fragment
 
         android:id="@+id/fragmentHome"
         android:name="jb.com.teamattnd.ui.fragment.HomeFragment"
@@ -14,5 +14,11 @@
         android:layout_height="495dp"
         tools:layout_editor_absoluteX="-116dp"
         tools:layout_editor_absoluteY="360dp"
-        tools:layout="@layout/fragment_home" />
+        tools:layout="@layout/fragment_home" />-->
+
+    <FrameLayout
+        android:id="@+id/sample_content_fragment"
+
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
 </android.support.constraint.ConstraintLayout>
