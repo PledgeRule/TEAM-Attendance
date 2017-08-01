@@ -13,6 +13,7 @@ import android.support.v7.widget.Toolbar
 import android.view.MenuItem
 import jb.com.teamattnd.R
 import jb.com.teamattnd.ui.fragment.HomeFragment
+import jb.com.teamattnd.ui.fragment.ProfileFragment
 import jb.com.teamattnd.util.Constant
 import org.jetbrains.anko.defaultSharedPreferences
 import org.jetbrains.anko.selector
@@ -85,7 +86,7 @@ class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         val id = item.itemId
 
         if (id == R.id.nav_events) {
-            // Handle the camera action
+
         } else if (id == R.id.nav_admin) {
 
         } else if (id == R.id.nav_contacts) {
@@ -94,6 +95,8 @@ class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
         } else if (id == R.id.nav_profile) {
 
+            val profileFragment : ProfileFragment = ProfileFragment()
+            addFragmentOnScreen(profileFragment, true,true,"profile")
         } else if (id == R.id.nav_calendar) {
 
         }
