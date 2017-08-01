@@ -8,9 +8,9 @@
         android:icon="@android:drawable/ic_input_get"
         android:title="Events" />
     <item
-        android:id="@+id/nav_team"
+        android:id="@+id/nav_admin"
         android:icon="@android:drawable/ic_menu_sort_by_size"
-        android:title="Teams" />
+        android:title="Admin" />
     <item
         android:id="@+id/nav_contacts"
         android:icon="@android:drawable/sym_action_call"

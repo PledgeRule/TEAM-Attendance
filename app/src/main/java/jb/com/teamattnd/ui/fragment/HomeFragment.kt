@@ -1,24 +1,28 @@
 package jb.com.teamattnd.ui.fragment
 
-import android.icu.lang.UCharacter
 import android.os.Bundle
-import android.support.v4.app.Fragment
-import android.support.v4.app.ListFragment
+import android.app.Fragment
 import android.view.*
 import jb.com.teamattnd.R
 
 /**
  * Created by sandeep.singh on 7/25/2017.
  */
-class HomeFragment :ListFragment(){
+class HomeFragment :Fragment(){
+
+    val TAG = javaClass.canonicalName
+    internal lateinit var view: View
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
     }
 
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         setHasOptionsMenu(true)
-        return super.onCreateView(inflater, container, savedInstanceState)
+        println("reached here")
+        var rootView: View = inflater?.inflate(R.layout.fragment_home, container, false)!!
+        return rootView
 
 
     }

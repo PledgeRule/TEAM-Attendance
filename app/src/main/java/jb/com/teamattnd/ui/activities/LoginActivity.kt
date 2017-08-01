@@ -8,24 +8,28 @@ import android.os.Bundle
 import android.os.Handler
 import android.text.TextUtils
 import android.view.View
-import android.view.inputmethod.EditorInfo
 import android.widget.Button
 import android.widget.EditText
-import android.widget.TextView
 
 import jb.com.teamattnd.R
-
-
+import android.support.design.widget.Snackbar
+import jb.com.teamattnd.util.Constant
+import org.jetbrains.anko.defaultSharedPreferences
 
 
 class LoginActivity : AppCompatActivity() {
 
-    private var mAuthTask: LoginActivity.UserLoginTask? = null
+//    private var mAuthTask: LoginActivity.UserLoginTask? = null
     // UI references.
+    var progressDialog: ProgressDialog? = null
     private var mEmailView: EditText? = null
     private var mPasswordView: EditText? = null
     private var mProgressView: View? = null
     private var mLoginFormView: View? = null
+
+
+    var usp: Constant? = null
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -90,14 +94,14 @@ class LoginActivity : AppCompatActivity() {
             // perform the user login attempt.
             showProgress(true)
 //            mAuthTask = UserLoginTask(email, password)
-//            mAuthTask!!.execute(null as Void?)
+//            mAuthTask!!.execute()
 //            login()
             Handler().postDelayed(
                     {
+                        showProgress(false)
                         // On complete call either onLoginSuccess or onLoginFailed
                         login()
-                        // onLoginFailed();
-                        showProgress(false)
+
                     }, 3000)
         }
 
@@ -122,6 +126,9 @@ class LoginActivity : AppCompatActivity() {
         override fun doInBackground(vararg params: Void): Boolean? {
             // TODO: attempt authentication against a network service.
 
+            defaultSharedPreferences.edit().putString(usp!!.USERNAME, mEmail).apply()
+            defaultSharedPreferences.edit().putString(usp!!.PASSWORD, mPassword).apply()
+
             try {
                 // Simulate network access.
                 Thread.sleep(2000)
@@ -129,59 +136,41 @@ class LoginActivity : AppCompatActivity() {
                 return false
             }
 
-            for (credential in LoginActivity.ADMIN_CREDENTIALS) {
-                val pieces = credential.split(":".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
-                if (pieces[0] == mEmail) {
-                    // Account exists, return true if the password matches.
-                    return pieces[1] == mPassword
-                }
+
+            if(mEmail == Constant.ADMIN_USERNAME && mPassword == Constant.ADMIN_PASSWORD) {
+                defaultSharedPreferences.edit()
+                        .putBoolean(usp!!.ISADMIN, true)
+                        .apply()
             }
 
-            // TODO: register the new account here.
+
             return true
         }
 
         override fun onPostExecute(success: Boolean?) {
-            mAuthTask = null
+//            mAuthTask = null
             showProgress(false)
 
             if (success!!) {
                 login()
-                finish()
             } else {
-                mPasswordView!!.error = getString(R.string.error_incorrect_password)
-                mPasswordView!!.requestFocus()
+                Snackbar.make(mLoginFormView!!, "Credentials are incorrect", Snackbar.LENGTH_LONG).setAction("Action", null).show()
             }
         }
 
-        override fun onCancelled() {
-            mAuthTask = null
-            showProgress(false)
-        }
-    }
-
-    companion object {
-
-        /**
-         * Id to identity READ_CONTACTS permission request.
-         */
-        private val REQUEST_READ_CONTACTS = 0
-
-        /**
-         * A dummy authentication store containing known user names and passwords.
-         * TODO: remove after connecting to a real authentication system.
-         */
-        private val ADMIN_CREDENTIALS = arrayOf("a@a.com:11111", "bar@example.com:world")
+//        override fun onCancelled() {
+//            mAuthTask = null
+//            showProgress(false)
+//        }
     }
 
     fun login()
     {
-        showProgress(false)
         startActivity(Intent(this, HomeActivity::class.java))
         finish()
     }
 
-    var progressDialog: ProgressDialog? = null
+
     private fun showProgress(show: Boolean) {
 
             // The ViewPropertyAnimator APIs are not available, so simply show
