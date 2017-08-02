@@ -11,7 +11,7 @@ import jb.com.teamattnd.R
  * Created by juhi.baranwal on 27-Jul-17.
  */
 
-internal class ProfileFragment : Fragment(){
+internal class ProfileFragment : android.support.v4.app.Fragment(){
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
