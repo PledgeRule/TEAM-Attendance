@@ -2,11 +2,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="jb.com.teamattnd">
 
+
     <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
     <uses-permission android:name="android.permission.BLUETOOTH" />
-
-    <!--&lt;!&ndash; To auto-complete the email text field in the login form with the user's emails &ndash;&gt;-->
-    <!--<uses-permission android:name="android.permission.GET_ACCOUNTS" />-->
 
     <application
         android:allowBackup="true"
@@ -32,6 +30,11 @@
             android:name=".ui.activities.CreateNewActivity"
             android:label="@string/title_activity_tasks" />
         <!--<activity android:name=".ui.activities.WelcomeActivity"></activity>-->
+        <activity android:name=".ui.activities.DeviceListActivity"
+
+            android:configChanges="orientation|keyboardHidden"
+            android:label="@string/select_device"
+            android:theme="@style/Theme.AppCompat.DayNight.Dialog.Alert"></activity>
     </application>
 
 </manifest>

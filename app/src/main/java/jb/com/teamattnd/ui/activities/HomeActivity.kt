@@ -5,7 +5,8 @@ import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.design.widget.FloatingActionButton
 import android.support.design.widget.NavigationView
-import android.app.Fragment
+import android.support.v4.app.Fragment
+
 import android.support.v4.view.GravityCompat
 import android.support.v4.widget.DrawerLayout
 import android.support.v7.app.ActionBarDrawerToggle
@@ -27,6 +28,14 @@ class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
+
+        if (savedInstanceState == null) {
+            val transaction = supportFragmentManager.beginTransaction()
+            val fragment = HomeFragment()
+//            transaction.replace(R.id.fragment_container, fragment)
+//            transaction.commit()
+            addFragmentOnScreen(fragment, true, false, "bluetooth")
+        }
 
         usp = Constant(this)
         isAdmin = defaultSharedPreferences.getBoolean(usp.ISADMIN, false)
@@ -56,13 +65,12 @@ class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         navigationView.setNavigationItemSelectedListener(this)
 
         val homeFragment : HomeFragment = HomeFragment()
-        addFragmentOnScreen(homeFragment, false,true,"home")
     }
 
     fun addFragmentOnScreen(fragment: Fragment, isReplace: Boolean, isBackstack: Boolean, screenTag: String) {
-        val fragmentManager = fragmentManager
+       // val fragmentManager = supportFragmentManager
         println("adding fragment - " + screenTag)
-        val fragmentTransaction = fragmentManager.beginTransaction()
+        val fragmentTransaction = supportFragmentManager.beginTransaction()
         if (isReplace)
             fragmentTransaction.replace(R.id.fragment_container, fragment, screenTag)
         else
