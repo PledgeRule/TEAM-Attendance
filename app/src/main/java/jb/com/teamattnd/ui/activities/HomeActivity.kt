@@ -13,32 +13,32 @@ import android.support.v7.app.ActionBarDrawerToggle
 import android.support.v7.widget.Toolbar
 import android.view.MenuItem
 import jb.com.teamattnd.R
-import jb.com.teamattnd.ui.fragment.HomeFragment
-import jb.com.teamattnd.ui.fragment.ProfileFragment
+import jb.com.teamattnd.ui.fragment.*
 import jb.com.teamattnd.util.Constant
-import org.jetbrains.anko.defaultSharedPreferences
-import org.jetbrains.anko.selector
-import org.jetbrains.anko.toast
+import jb.com.teamattnd.util.Controller
+import jb.com.teamattnd.util.PreferenceHelper
+import kotlinx.android.synthetic.main.app_bar_home.*
+import org.jetbrains.anko.*
 
 class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
 
-    lateinit var usp: Constant
-    var isAdmin : Boolean = false
+    var pref:PreferenceHelper = PreferenceHelper
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
 
         if (savedInstanceState == null) {
-            val transaction = supportFragmentManager.beginTransaction()
-            val fragment = HomeFragment()
-//            transaction.replace(R.id.fragment_container, fragment)
-//            transaction.commit()
-            addFragmentOnScreen(fragment, true, false, "bluetooth")
+            val fragment:Fragment
+            if(Controller.isAdmin) {
+                fragment = AdminFragment()
+                fab.show()
+            }else {
+                fragment = ClientFragment()
+                fab.hide()
+            }
+            addFragmentOnScreen(fragment, true, true, "bluetooth")
         }
-
-        usp = Constant(this)
-        isAdmin = defaultSharedPreferences.getBoolean(usp.ISADMIN, false)
 
         val toolbar = findViewById(R.id.toolbar) as Toolbar
         setSupportActionBar(toolbar)
@@ -64,7 +64,11 @@ class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         val navigationView = findViewById(R.id.nav_view) as NavigationView
         navigationView.setNavigationItemSelectedListener(this)
 
-        val homeFragment : HomeFragment = HomeFragment()
+
+
+
+
+
     }
 
     fun addFragmentOnScreen(fragment: Fragment, isReplace: Boolean, isBackstack: Boolean, screenTag: String) {
@@ -93,19 +97,31 @@ class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         // Handle navigation view item clicks here.
         val id = item.itemId
 
-        if (id == R.id.nav_events) {
-
+        if (id == R.id.nav_home) {
+            val fragment:Fragment
+            if(Controller.isAdmin)
+                fragment = AdminFragment()
+            else
+                fragment = ClientFragment()
+            addFragmentOnScreen(fragment, true,true,"home")
         } else if (id == R.id.nav_admin) {
-
-        } else if (id == R.id.nav_contacts) {
-
-        } else if (id == R.id.nav_notification) {
+            val adminFragment : AdminFunctionFragment = AdminFunctionFragment()
+            addFragmentOnScreen(adminFragment, true,false,"admin")
 
         } else if (id == R.id.nav_profile) {
-
             val profileFragment : ProfileFragment = ProfileFragment()
-            addFragmentOnScreen(profileFragment, true,true,"profile")
+            addFragmentOnScreen(profileFragment, true,false,"profile")
         } else if (id == R.id.nav_calendar) {
+            val calendarFragment : CalendarFragment = CalendarFragment()
+            addFragmentOnScreen(calendarFragment, true,false,"calendar")
+        }
+        else if (id == R.id.nav_logout) {
+
+            alert("Are you sure ou want to logout?") {
+                yesButton {loginScreen()}
+
+                noButton { }
+            }.show()
 
         }
 
@@ -114,5 +130,11 @@ class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         return true
     }
 
+    fun loginScreen()
+    {
+        pref.clearAllPreference(this)
+        startActivity(Intent(this, LoginActivity::class.java))
+        finish()
 
+    }
 }

@@ -1,6 +1,8 @@
 package jb.com.teamattnd.ui.activities
 
+import android.app.Application
 import android.app.ProgressDialog
+import android.content.Context
 import android.content.Intent
 import android.os.AsyncTask
 import android.support.v7.app.AppCompatActivity
@@ -14,7 +16,8 @@ import android.widget.EditText
 import jb.com.teamattnd.R
 import android.support.design.widget.Snackbar
 import jb.com.teamattnd.util.Constant
-import org.jetbrains.anko.defaultSharedPreferences
+import jb.com.teamattnd.util.Controller
+import jb.com.teamattnd.util.PreferenceHelper
 
 
 class LoginActivity : AppCompatActivity() {
@@ -26,9 +29,8 @@ class LoginActivity : AppCompatActivity() {
     private var mPasswordView: EditText? = null
     private var mProgressView: View? = null
     private var mLoginFormView: View? = null
-
-
-    var usp: Constant? = null
+    private var email: String? = null
+    private var password: String? = null
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -37,15 +39,7 @@ class LoginActivity : AppCompatActivity() {
 
 
         mEmailView = findViewById(R.id.email) as EditText
-
         mPasswordView = findViewById(R.id.password) as EditText
-//        mPasswordView!!.setOnEditorActionListener( TextView.OnEditorActionListener { textView, id, keyEvent ->
-//            if ( id == R.id.login || id == EditorInfo.IME_NULL){
-////                attemptLogin()
-//                return@OnEditorActionListener true
-//            }
-//            false
-//        })
 
         val mEmailSignInButton = findViewById(R.id.email_sign_in_button) as Button
         mEmailSignInButton.setOnClickListener { attemptLogin() }
@@ -61,14 +55,14 @@ class LoginActivity : AppCompatActivity() {
         mPasswordView!!.error = null
 
         // Store values at the time of the login attempt.
-        val email = mEmailView!!.text.toString()
-        val password = mPasswordView!!.text.toString()
+        email = mEmailView!!.text.toString()
+        password = mPasswordView!!.text.toString()
 
         var cancel = false
         var focusView: View? = null
 
         // Check for a valid password, if the user entered one.
-        if (!TextUtils.isEmpty(password) && !isPasswordValid(password)) {
+        if (!TextUtils.isEmpty(password) && !isPasswordValid(password!!)) {
             mPasswordView!!.error = getString(R.string.error_invalid_password)
             focusView = mPasswordView
             cancel = true
@@ -79,7 +73,7 @@ class LoginActivity : AppCompatActivity() {
             mEmailView!!.error = getString(R.string.error_field_required)
             focusView = mEmailView
             cancel = true
-        } else if (!isEmailValid(email)) {
+        } else if (!isEmailValid(email!!)) {
             mEmailView!!.error = getString(R.string.error_invalid_email)
             focusView = mEmailView
             cancel = true
@@ -126,8 +120,6 @@ class LoginActivity : AppCompatActivity() {
         override fun doInBackground(vararg params: Void): Boolean? {
             // TODO: attempt authentication against a network service.
 
-            defaultSharedPreferences.edit().putString(usp!!.USERNAME, mEmail).apply()
-            defaultSharedPreferences.edit().putString(usp!!.PASSWORD, mPassword).apply()
 
             try {
                 // Simulate network access.
@@ -138,9 +130,9 @@ class LoginActivity : AppCompatActivity() {
 
 
             if(mEmail == Constant.ADMIN_USERNAME && mPassword == Constant.ADMIN_PASSWORD) {
-                defaultSharedPreferences.edit()
-                        .putBoolean(usp!!.ISADMIN, true)
-                        .apply()
+//                defaultSharedPreferences.edit()
+//                        .putBoolean(usp!!.ISADMIN, true)
+//                        .apply()
             }
 
 
@@ -158,14 +150,17 @@ class LoginActivity : AppCompatActivity() {
             }
         }
 
-//        override fun onCancelled() {
+        override fun onCancelled() {
 //            mAuthTask = null
-//            showProgress(false)
-//        }
+            showProgress(false)
+        }
     }
 
     fun login()
     {
+
+        Controller.setUserType(this, email!!, password!!)
+        PreferenceHelper.setBooleanPreference(this, Constant.IS_LOGGED_IN, true)
         startActivity(Intent(this, HomeActivity::class.java))
         finish()
     }

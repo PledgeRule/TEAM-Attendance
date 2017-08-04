@@ -4,38 +4,33 @@
 
 <group android:checkableBehavior="single">
     <item
-        android:id="@+id/nav_events"
+        android:id="@+id/nav_home"
         android:icon="@android:drawable/ic_input_get"
-        android:title="Events" />
+        android:title="Home" />
     <item
         android:id="@+id/nav_admin"
         android:icon="@android:drawable/ic_menu_sort_by_size"
         android:title="Admin" />
     <item
-        android:id="@+id/nav_contacts"
+        android:id="@+id/nav_profile"
         android:icon="@android:drawable/sym_action_call"
-        android:title="Contacts" />
+        android:title="My Profile" />
     <item
-        android:id="@+id/nav_notification"
-        android:icon="@android:drawable/ic_dialog_email"
-        android:title="Notification" />
+        android:id="@+id/nav_calendar"
+        android:icon="@android:drawable/ic_menu_my_calendar"
+        android:title="My Calendar" />
+    <item
+        android:id="@+id/nav_logout"
+        android:icon="@android:drawable/ic_secure"
+        android:title="Logout" />
 </group>
+<!--
 
 <item android:title="Personal">
     <menu>
-        <item
-            android:id="@+id/nav_profile"
-            android:icon="@android:drawable/sym_action_call"
-            android:title="My Profile" />
-        <item
-            android:id="@+id/nav_calendar"
-            android:icon="@android:drawable/ic_menu_my_calendar"
-            android:title="My Calendar" />
-        <item
-            android:id="@+id/nav_logout"
-            android:icon="@android:drawable/ic_secure"
-            android:title="Logout" />
+
     </menu>
 </item>
+-->
 
 </menu>

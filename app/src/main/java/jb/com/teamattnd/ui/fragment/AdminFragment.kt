@@ -1,8 +1,5 @@
 package jb.com.teamattnd.ui.fragment
 
-
-
-
 import android.bluetooth.BluetoothAdapter
 import android.content.Intent
 import android.icu.lang.UCharacter
@@ -10,29 +7,20 @@ import android.os.Bundle
 
 import android.support.v4.app.Fragment
 import android.support.v4.app.ListFragment
-
 import android.view.*
 import android.widget.Toast
 import jb.com.teamattnd.R
-
-
 import jb.com.teamattnd.ui.activities.DeviceListActivity
-import kotlinx.android.synthetic.main.activity_home.*
-
+import kotlinx.android.synthetic.main.fragment_admin_home.*
 
 /**
  * Created by sandeep.singh on 7/25/2017.
  */
-class HomeFragment :ListFragment(){
-
-    val TAG = javaClass.canonicalName
-    internal lateinit var view: View
+class AdminFragment :ListFragment(){
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-
         mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter()
 
         if (mBluetoothAdapter==null){
@@ -44,21 +32,9 @@ class HomeFragment :ListFragment(){
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         setHasOptionsMenu(true)
         return super.onCreateView(inflater, container, savedInstanceState)
-    }
-
-/*
-    override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        setHasOptionsMenu(true)
-        return super(inflater,container,savedInstanceState)
-        */
-/*println("reached here")
-        var rootView: View = inflater?.inflate(R.layout.fragment_home, container, false)!!
-        return rootView*//*
-
 
 
     }
-*/
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
@@ -78,7 +54,7 @@ class HomeFragment :ListFragment(){
         inflater!!.inflate(R.menu.bluetooth_menu,menu)
     }
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
-         super.onOptionsItemSelected(item)
+        super.onOptionsItemSelected(item)
 
         when(item!!.itemId){
             R.id.secure_connect_scan-> {
